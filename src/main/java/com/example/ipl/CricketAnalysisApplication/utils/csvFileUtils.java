@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -34,6 +36,7 @@ public class csvFileUtils {
     public List<String[]> readLineByLine(Path filePath) throws Exception {
         List<String[]> list = new ArrayList<>();
         Map<String, Team> m = new HashMap<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.ENGLISH);
 
 //        List<Match> matches=new ArrayList<>();
         try (Reader reader = Files.newBufferedReader(filePath)) {
@@ -44,8 +47,8 @@ public class csvFileUtils {
                     Match match = new Match();
                     match.setID(Long.parseLong(line[0]));
                     match.setCity(line[1]);
-                    match.setDate((line[2]));
-//                    match.setDate(LocalDate.parse(line[2]));
+//                    match.setMatchDate((line[2]));
+                    match.setMatchDate(LocalDate.parse(line[2], formatter));
 //                    match.setSeason(Integer.parseInt(line[3]));
                     match.setSeason((line[3]));
                     match.setMatchNumber(line[4]);
@@ -151,4 +154,3 @@ public class csvFileUtils {
 //        return Arrays.asList(arr);
 //    }
 }
-

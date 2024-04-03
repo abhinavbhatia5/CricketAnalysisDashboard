@@ -22,7 +22,8 @@ public class Match {
     @Id
     private Long ID;
     private String City;
-    private String date;
+//    private String matchDate;
+    private LocalDate matchDate;
     private String Season;
     private String MatchNumber;
     private String Team1;

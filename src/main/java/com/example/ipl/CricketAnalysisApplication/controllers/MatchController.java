@@ -15,7 +15,7 @@ public class MatchController {
     @Autowired
     MatchRepository m;
 
-//    @GetMapping("/read")
+    //    @GetMapping("/read")
 //    public String readCSV(){
 //        System.out.println("hello");
 //        return "test";
@@ -27,8 +27,8 @@ public class MatchController {
 
 
 
-@GetMapping("/allTeams")
-public List<String> getTeams(){
-    return m.GetAllTeams1();
-}
+    @GetMapping("/allTeams")
+    public List<String> getTeams(){
+        return m.GetAllTeams1();
+    }
 }
