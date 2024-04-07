@@ -6,9 +6,13 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface TeamRepository extends CrudRepository<Team,Long> {
 
-    @Query(value="select * from team_table where team_table.team_name=:team limit 1",nativeQuery = true)
-    Team getByName(@Param("team") String teams);
+    @Query(value = "select * from team_table where team_table.team_name=?1 limit 1;", nativeQuery = true)
+    Team getByName(String teams);
+
+
 }

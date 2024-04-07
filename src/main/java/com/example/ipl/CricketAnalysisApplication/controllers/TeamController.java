@@ -27,7 +27,16 @@ public class TeamController {
         Team t=teamRepository.getByName(teamName);
         List<Match> matchList=matchRepository.GetMatchInfo(teamName);
         t.setLatestMatches(matchList);
+//        System.out.println("hi");
+//        System.out.println(t);
+        return t;
+    }
 
+    @GetMapping("/{teamName}")
+    public Team getTeamtest(@PathVariable String teamName) {
+        Team t = teamRepository.getByName(teamName);
+//        List<Match> matchList=matchRepository.GetMatchInfo(teamName);
+//        t.setLatestMatches(matchList);
 //        System.out.println("hi");
 //        System.out.println(t);
         return t;
