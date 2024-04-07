@@ -32,7 +32,7 @@ public class Match {
     private String TossWinner;
     private String TossDecison;
     private String SuperOver;
-    private String WinningTeam;
+    private String winningTeam;
     private String WonBy;
     private String Margin;
     private String method;
