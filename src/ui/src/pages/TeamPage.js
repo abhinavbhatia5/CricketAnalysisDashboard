@@ -58,14 +58,13 @@ export const TeamPage = () => {
       {team.latestMatches.slice(1).map((match) => <MatchSmallComponent teamName={teamName} match={match} />)}
       <h4>Total Matches: {team.totalMatches}</h4>
       <h4>Total Wins: {team.totalWins}</h4>
+      
 
-      <div className='more-link-section'>
-        <a href="#">More</a>
-
+      <div className="more-link-section">
+        <a href="#">More-></a>
         </div>
-
-
-    </div>
+        </div>
+    
   );
 }
 export default TeamPage;

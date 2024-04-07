@@ -12,11 +12,11 @@ export const MatchSmallComponent = ({teamName,match}) => {
   console.log(match.winningTeam);
   console.log(teamName);
   return (
-    <div className={isMatchWon ? 'MatchDetailComponent won-match' : 'MatchDetailComponent lost-match'}>
+    <div className={isMatchWon ? 'MatchSmallComponent won-match' : 'MatchSmallComponent lost-match'}>
       <h2><Link to={team1route}>{match.team1}</Link>
-       vs
+        <span> vs </span>
         <Link to={team2route}>{match.team2}</Link></h2>
-      <p>{match.winningTeam} won by {match.margin} {match.wonBy}</p>
+      <p className="match-result">{match.winningTeam} won by {match.margin} {match.wonBy}</p>
 
     </div>
   );
