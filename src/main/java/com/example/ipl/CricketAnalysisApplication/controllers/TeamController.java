@@ -41,4 +41,9 @@ public class TeamController {
 //        System.out.println(t);
         return t;
     }
+
+    @GetMapping("/team")
+    public Iterable<Team> getAllTeam() {
+        return this.teamRepository.findAll();
+    }
 }

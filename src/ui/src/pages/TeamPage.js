@@ -3,9 +3,24 @@ import { MatchDetailComponent } from '../components/MatchDetailComponent';
 import { MatchSmallComponent } from '../components/MatchSmallComponent';
 import { useParams } from 'react-router-dom';
 import './TeamPage.scss';
+import { Link } from 'react-router-dom';
 // import { PieChart } from 'react-minimal-pie-chart';
 import { PieChart } from '@mui/x-charts/PieChart';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import CanvasJSReact from '@canvasjs/react-charts';
+
+// Define your custom theme
+const theme = createTheme({
+  components: {
+    MuiLegend: {
+      styleOverrides: {
+        root: {
+          color: '#ffffff', // Set legend text color to white
+        },
+      },
+    },
+  },
+});
 
 export const TeamPage = () => {
   const [team, setTeam] = useState({ latestMatches: [] });
@@ -42,14 +57,15 @@ export const TeamPage = () => {
           series={[
             {
               data: [
-                { title: 'Losses', value: team.totalMatches - team.totalWins, label: 'Losses', color: '#a34d5d' },
-                { title: 'Wins', value: team.totalWins, label: 'Wins', color: '#4da375' },
+                { title: 'Losses', value: team.totalMatches - team.totalWins, label: 'Losses', color: '#3f37c9' },
+                { title: 'Wins', value: team.totalWins, label: 'Wins', color: '#4895ef' },
               ]
             }
           ]}
           width={400}
-  height={200}
+          height={200}
         />
+
 
       </div>
       <div className="Match-Detail-Component-section">
@@ -58,13 +74,13 @@ export const TeamPage = () => {
       {team.latestMatches.slice(1).map((match) => <MatchSmallComponent teamName={teamName} match={match} />)}
       <h4>Total Matches: {team.totalMatches}</h4>
       <h4>Total Wins: {team.totalWins}</h4>
-      
+
 
       <div className="more-link-section">
-        <a href="#">More-></a>
-        </div>
-        </div>
-    
+        <Link to={`/team/${teamName}/year/${process.env.REACT_APP_DATA_END_YEAR}`}>More-{'>'}</Link>
+      </div>
+    </div>
+
   );
 }
 export default TeamPage;
