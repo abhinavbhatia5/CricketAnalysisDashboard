@@ -6,7 +6,9 @@ import com.example.ipl.CricketAnalysisApplication.repo.MatchRepository;
 import com.example.ipl.CricketAnalysisApplication.repo.TeamRepository;
 import com.opencsv.CSVReader;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.annotation.After;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.io.Reader;
@@ -34,6 +36,32 @@ public class csvFileUtils {
         loacCSVdataIntoDB();
     }
 
+    /*
+    Initialize HashMap<String, Team> m
+
+    For each line in CSV:
+        Parse line to create Match object
+        Extract team1, team2, and winningTeam from Match object
+
+        If m does not contain team1:
+            Create new Team object for team1
+            Add to m
+
+        If m does not contain team2:
+            Create new Team object for team2
+            Add to m
+
+        Retrieve Team objects for team1 and team2 from m
+        Increment totalMatches for both Team objects by 1
+
+        If team1 or team2 is the winningTeam:
+            Increment totalWins for the winning Team object by 1
+
+        Update m with modified Team objects
+
+    After processing all lines:
+        Save all Team objects in m to database using teamRepository.saveAll(m.values())
+     */
     public List<String[]> readLineByLine(Path filePath) throws Exception {
         List<String[]> list = new ArrayList<>();
         Map<String, Team> m = new HashMap<>();
@@ -125,7 +153,7 @@ public class csvFileUtils {
                 //
                 //
                 // }
-                System.out.println(m.values());
+//                System.out.println(m.values());
                 teamRepository.saveAll(m.values());
             }
             // for(String t:m.keySet()){
@@ -140,7 +168,8 @@ public class csvFileUtils {
     public void loacCSVdataIntoDB() {
         try {
             // csvFileUtils csvObj=new csvFileUtils();
-            readLineByLine(Path.of("C:/Users/abhin/Downloads/IPL_Matches_2008_2022.csv"));
+//            readLineByLine(Path.of("C:/Users/abhin/Downloads/IPL_Matches_2008_2022.csv"));
+            readLineByLine(Path.of("src/dataset/IPL_Matches_2008_2022.csv"));
 
         } catch (Exception ex) {
             log.error("Error while reading csv file");
