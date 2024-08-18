@@ -17,11 +17,11 @@ public class MatchController {
     @Autowired
     MatchRepository m;
 
-    //    @GetMapping("/read")
-//    public String readCSV(){
-//        System.out.println("hello");
-//        return "test";
-//    }
+    @GetMapping("/ping")
+    public String healthCheck() {
+        return "pong";
+    }
+
     @GetMapping("/teams")
     public List<Match> getMatches(@RequestParam String teamName){
 

@@ -17,7 +17,6 @@ public class TeamController {
     TeamRepository teamRepository;
     MatchRepository matchRepository;
 
-    @Autowired
     TeamController(TeamRepository teamRepository, MatchRepository matchRepository){
         this.teamRepository=teamRepository;
         this.matchRepository=matchRepository;

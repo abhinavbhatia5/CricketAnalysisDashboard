@@ -1,0 +1,66 @@
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: db_example
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      retries: 10
+      interval: 3s
+      timeout: 30s
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - iplNetwork
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spring-backend
+    ports:
+      - "8082:8082"
+    networks:
+      - iplNetwork
+    depends_on:
+      mysql:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "curl", "-s", "http://localhost:8082/ping" ]
+      retries: 10
+      interval: 3s
+      timeout: 30s
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/db_example
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: pass
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    volumes:
+      - build_data:/app/ui/build
+
+  nginx:
+    image: nginx:latest
+    container_name: react-nginx
+    ports:
+      - "80:80"
+    networks:
+      - iplNetwork
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - build_data:/usr/share/nginx/html
+    depends_on:
+      backend:
+        condition: service_healthy
+
+networks:
+  iplNetwork:
+    name: iplNetwork
+    driver: bridge
+volumes:
+  mysql_data:
+  build_data:
