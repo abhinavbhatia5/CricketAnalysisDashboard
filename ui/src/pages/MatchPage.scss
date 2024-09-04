@@ -3,12 +3,39 @@
     grid-template-columns: 1fr 6fr;
     grid-column-gap: 20px;
 
-    .year-selector {
+//     .year-selector {
+//         justify-self: end;
+//         padding: 20px;
+//     }
+.year-selector {
         justify-self: end;
         padding: 20px;
+
+        .navigation-buttons {
+            display: flex;
+            flex-direction: column;
+            margin-top: 10px;
+            text-align: right;
+
+            button {
+                background: transparent;
+                color: lightgray;
+                border: none;
+                cursor: pointer;
+                margin-bottom: 5px;
+            }
+
+            button:hover {
+                text-decoration: underline;
+            }
+        }
     }
+
 
     .page-heading {
         margin: 20px auto;
     }
-}
+   }
+
+
+

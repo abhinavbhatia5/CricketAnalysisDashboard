@@ -1,0 +1,5 @@
+.vscode/*
+.git/*
+.gitignore
+src/ui/node_modules/*
+src/ui/build/*
