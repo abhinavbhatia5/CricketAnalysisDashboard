@@ -26,14 +26,10 @@ public class csvFileUtils {
     TeamRepository teamRepository;
 
     @Autowired
-    // public csvFileUtils(MatchRepository matchRepository){
-    // this.matchRepository=matchRepository;
-    // loacCSVdataIntoDB();
-    // }
     public csvFileUtils(MatchRepository matchRepository, TeamRepository teamRepository) {
         this.matchRepository = matchRepository;
         this.teamRepository = teamRepository;
-        loacCSVdataIntoDB();
+        loadCSVdataIntoDB();
     }
 
     /*
@@ -66,6 +62,7 @@ public class csvFileUtils {
         List<String[]> list = new ArrayList<>();
         Map<String, Team> m = new HashMap<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.ENGLISH);
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);
 
         // List<Match> matches=new ArrayList<>();
         try (Reader reader = Files.newBufferedReader(filePath)) {
@@ -165,7 +162,7 @@ public class csvFileUtils {
         }
     }
 
-    public void loacCSVdataIntoDB() {
+    public void loadCSVdataIntoDB() {
         try {
             // csvFileUtils csvObj=new csvFileUtils();
 //            readLineByLine(Path.of("C:/Users/abhin/Downloads/IPL_Matches_2008_2022.csv"));

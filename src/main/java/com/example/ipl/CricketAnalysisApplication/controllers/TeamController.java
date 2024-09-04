@@ -1,48 +1,51 @@
 package com.example.ipl.CricketAnalysisApplication.controllers;
 
-import com.example.ipl.CricketAnalysisApplication.model.Match;
 import com.example.ipl.CricketAnalysisApplication.model.Team;
-import com.example.ipl.CricketAnalysisApplication.repo.MatchRepository;
-import com.example.ipl.CricketAnalysisApplication.repo.TeamRepository;
+import com.example.ipl.CricketAnalysisApplication.services.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/")
 @CrossOrigin
 public class TeamController {
 
-    TeamRepository teamRepository;
-    MatchRepository matchRepository;
+    private final TeamService teamService;
 
-    TeamController(TeamRepository teamRepository, MatchRepository matchRepository){
-        this.teamRepository=teamRepository;
-        this.matchRepository=matchRepository;
+    @Autowired
+    public TeamController(TeamService teamService) {
+        this.teamService = teamService;
     }
+
+    /**
+     * Get team details along with the latest matches.
+     *
+     * @param teamName the name of the team
+     * @return the team details with the latest matches
+     */
     @GetMapping("/team/{teamName}")
-    public Team getTeam(@PathVariable String teamName){
-        Team t=teamRepository.getByName(teamName);
-        List<Match> matchList=matchRepository.GetMatchInfo(teamName);
-        t.setLatestMatches(matchList);
-//        System.out.println("hi");
-//        System.out.println(t);
-        return t;
+    public Team getTeam(@PathVariable String teamName) {
+        return teamService.getTeamWithMatches(teamName);
     }
 
+    /**
+     * Get team details without matches (test method).
+     *
+     * @param teamName the name of the team
+     * @return the team details without matches
+     */
     @GetMapping("/{teamName}")
-    public Team getTeamtest(@PathVariable String teamName) {
-        Team t = teamRepository.getByName(teamName);
-//        List<Match> matchList=matchRepository.GetMatchInfo(teamName);
-//        t.setLatestMatches(matchList);
-//        System.out.println("hi");
-//        System.out.println(t);
-        return t;
+    public Team getTeamTest(@PathVariable String teamName) {
+        return teamService.getTeam(teamName);
     }
 
+    /**
+     * Get all teams.
+     *
+     * @return an iterable of all teams
+     */
     @GetMapping("/team")
     public Iterable<Team> getAllTeam() {
-        return this.teamRepository.findAll();
+        return teamService.getAllTeams();
     }
 }
